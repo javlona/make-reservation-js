@@ -29,4 +29,5 @@ form{
 
 td:first-child, td:last-child{
     text-align: center;
+    cursor: pointer;
 }  
