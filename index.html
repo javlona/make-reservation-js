@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="bootstrap.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta2/css/all.min.css" integrity="sha512-YWzhKL2whUzgiheMoBFwW8CKV4qpHQAEuvilg9FAn5VJUDwKZZxkJNuGM4XkWuk94WCrrwslk8yWNGmY1EduTA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="style.css">
+
+    <title>Make Reservation</title>
+</head>
+<body>
+    <div class="container mt-3">
+        <h1 class="text-center">Make Reservation</h1>
+        <form id="form-control">
+            <div class="form-group">
+                <label for="firstName" class="form-label mt-2">First Name</label>
+                <input type="text" id="firstName" class="form-control">
+            </div>
+            <div class="form-group">
+                <label for="lastName" class="form-label mt-2">Last Name</label>
+                <input type="text" id="lastName" class="form-control">
+            </div>
+            <div class="form-group">
+                <label for="phone" class="form-label mt-2">Phone Number</label>
+                <input type="number" id="phone" class="form-control">
+            </div>
+            <button id="mkReserveBtn" type="button" value="Make Reservation" class="btn btn-primary btn-block mt-3">add</button>
+            <!-- <div class="alert alert-warning alert-dismissible fade show" role="alert">
+                <strong>Holy guacamole!</strong> You should check in on some of those fields below.
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>   
+                </button>
+            </div> -->
+        </form>
+        <table id="reservationTable" class="table table-bordered table-striped table-hover mt-5">
+            <thead>
+                <tr>
+                    <th></th>
+                    <th>First Name</th>
+                    <th>Last Name</th>
+                    <th>Phone Number</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody id="nameList">
+
+            </tbody>
+        </table>
+    </div>
+
+
+
+
+    <script src="app.js"></script>
+</body>
+</html>
