@@ -1,11 +1,11 @@
 let firstName = document.querySelector('#firstName');
 let lastName = document.querySelector('#lastName');
 let phone = document.querySelector('#phone');
-let mkReserveBtn = document.querySelector('#mkReserveBtn');
+let addBtn = document.querySelector('#addBtn');
 let reservationTable = document.querySelector('#reservationTable'); //table tag
 let nameList = document.querySelector('#nameList');  // tbody tag
 let deleteIcon = '<i class="fas fa-trash text-center" onclick="deletePerson(event)"></i>'
-let editIcon = '<i class="fas fa-edit text-center"></i>'
+let editIcon = '<i class="fas fa-edit text-center" onclick="updatePerson(event)"></i>'
 
 function Person(first, last, phone){
     this.firstName = first;
@@ -42,9 +42,10 @@ let addPerson = () => {
     //push the ready tr row into tbody
     nameList.appendChild(row);
 
-    const person1 = new Person(firstName.value, lastName.value, phone.value);
-    console.log(person1);
+    const person = new Person(firstName.value, lastName.value, phone.value);
+    console.log(person);
 }
+
 
 //clear input fields after addition
 let inputClear = () => {
@@ -56,5 +57,12 @@ let inputClear = () => {
 //delete person on delete button
 let deletePerson = (e) => e.target.parentElement.parentElement.remove()
 
+//edit existing entry
+let updatePerson = (e) => {
+    console.log(e)
+    
+    addBtn.innerText = "update"
+}
 
-mkReserveBtn.addEventListener("click", addToTable);
+
+addBtn.addEventListener("click", addToTable);
