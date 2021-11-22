@@ -6,6 +6,7 @@ let reservationTable = document.querySelector('#reservationTable'); //table tag
 let nameList = document.querySelector('#nameList');  // tbody tag
 let deleteIcon = '<i class="fas fa-trash text-center" onclick="deletePerson(event)"></i>'
 let editIcon = '<i class="fas fa-edit text-center" onclick="updatePerson(event)"></i>'
+let alertBox = document.querySelector('#alert')
 
 function Person(first, last, phone){
     this.firstName = first;
@@ -14,8 +15,11 @@ function Person(first, last, phone){
 }
 
 let addToTable = () => {
-    
-    if(firstName.value != null && firstName.value != "") {
+
+    // check if it is not empty
+    if(firstName.value === "" || lastName.value === "" || phone.value === "" ) {
+        alertMessage('Please fill out', 'danger')
+        } else {
         //add person to the table
         addPerson();
 
@@ -44,6 +48,8 @@ let addPerson = () => {
 
     const person = new Person(firstName.value, lastName.value, phone.value);
     console.log(person);
+
+    alertMessage(' Added', 'success')
 }
 
 
@@ -55,13 +61,33 @@ let inputClear = () => {
 }
 
 //delete person on delete button
-let deletePerson = (e) => e.target.parentElement.parentElement.remove()
-
+let deletePerson = (e) => {
+    e.target.parentElement.parentElement.remove()
+    alertMessage(' Deleted', 'warning')
+}
 //edit existing entry
 let updatePerson = (e) => {
-    console.log(e)
     
-    addBtn.innerText = "update"
+    deletePerson(e) //first deletes the entry
+    addPerson() // then adds from input
+    inputClear() // clears the input field
+    alertMessage(' Updated', 'success') // and gives alert
+}
+
+// message
+let alertMessage = (message, type) => {
+    
+    const p = document.createElement('span');
+    p.innerText = message
+    alertBox.appendChild(p)
+    // alertBox.innerText = `${message}`
+    alertBox.classList.add(`${type}`)
+
+    setTimeout(() => {
+        alertBox.classList.remove(`${type}`)
+        alertBox.removeChild(p)
+    }, 1500);
+
 }
 
 

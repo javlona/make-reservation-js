@@ -4,7 +4,7 @@
 }
 
 .btn-block{
-    display: block !important;
+    display: inline-block !important;
     
 }
 
@@ -31,3 +31,31 @@ td:first-child, td:last-child{
     text-align: center;
     cursor: pointer;
 }  
+
+.message{
+    display: inline-block;
+    padding: 5px 20px;
+    position: relative;
+    top: 10px;
+    margin: 0 20px;
+    /* transition: all 0.3s; */
+}
+
+.message>*+*{
+    margin: 0 5px;
+    padding: 0 5px;
+    border-left: 1px solid #eee;
+}
+
+.danger{
+    background: var(--bs-danger);
+}
+
+.success{
+    background: var(--bs-success);
+}
+
+.warning{
+    background: var(--bs-warning);
+}
+
