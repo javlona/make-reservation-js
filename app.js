@@ -15,6 +15,7 @@ function Person(first, last, phone){
 }
 
 //Local Storage
+
 let Storage = {
 
     get: function(key){
@@ -97,7 +98,7 @@ let alertMessage = (message, type) => {
     
     const p = document.createElement('span');
     p.innerText = message
-    alertBox.appendChild(p)
+    alertBox.innerHTML = p
     alertBox.classList.add(`${type}`)
 
     //disappear and delete message
