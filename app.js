@@ -14,6 +14,23 @@ function Person(first, last, phone){
     this.phone = phone;
 }
 
+//Local Storage
+let Storage = {
+
+    get: function(key){
+        return JSON.parse(localStorage.getItem(key))
+    },
+
+    add: function(key, value){
+        return localStorage.setItem(key, JSON.stringify(value))
+    },
+
+    delete: function(key){
+        localStorage.removeItem(key)
+    }
+}
+
+//add entries to table from input
 let addToTable = () => {
 
     // check if it is not empty
@@ -65,6 +82,7 @@ let deletePerson = (e) => {
     e.target.parentElement.parentElement.remove()
     alertMessage(' Deleted', 'warning')
 }
+
 //edit existing entry
 let updatePerson = (e) => {
     
@@ -74,15 +92,15 @@ let updatePerson = (e) => {
     alertMessage(' Updated', 'success') // and gives alert
 }
 
-// message
+// message alert
 let alertMessage = (message, type) => {
     
     const p = document.createElement('span');
     p.innerText = message
     alertBox.appendChild(p)
-    // alertBox.innerText = `${message}`
     alertBox.classList.add(`${type}`)
 
+    //disappear and delete message
     setTimeout(() => {
         alertBox.classList.remove(`${type}`)
         alertBox.removeChild(p)
