@@ -105,7 +105,7 @@ let deletePerson = (e, id) => {
     //delete from document
     e.target.parentElement.parentElement.remove()
     
-    // delete from localStorage
+    // delete from localStorage with filtering out
     const data = Storage.get("data")
     let newData = data.filter(data => data.id != id)
 
@@ -116,13 +116,17 @@ let deletePerson = (e, id) => {
 }
 
 //edit existing entry
-let updatePerson = (e, id) => {
-    console.log(id)
+let updatePerson = (id) => {
+    if(addBtn.innerText === 'add') addBtn.innerText = 'update'
+    
     const data = Storage.get("data")
+    console.log(data)
     let newData = data.filter(data => data.id === id)
     firstName.value = newData[0].firstName
     lastName.value = newData[0].lastName
     phone.value = newData[0].phone
+
+
     // deletePerson(e) //first deletes the entry
     // addPerson() // then adds from input
     // inputClear() // clears the input field
@@ -130,23 +134,11 @@ let updatePerson = (e, id) => {
 
 }
 
-// message alert
-let alertMessage = (message, type) => {
-    
-    const span = `<span id="mess">${message}</span>`;
-    // span.innerText = message
-    alertBox.innerHTML = span
-    alertBox.classList.add(`${type}`)
-    let mess = document.getElementById("mess")
-
-    //disappear and delete message
-    setTimeout(() => {
-        alertBox.classList.remove(`${type}`)
-        alertBox.removeChild(mess)
-    }, 1500);
+let updateTable = (id) => {
 
 }
 
+// 
 let renderStorageToDocument = () => {
     if(isStorageEmpty()) return;
     
@@ -172,6 +164,29 @@ let renderStorageToDocument = () => {
     }
 }
 
+// message alert
+let alertMessage = (message, type) => {
+    
+    const span = `<span id="mess">${message}</span>`;
+    // span.innerText = message
+    alertBox.innerHTML = span
+    alertBox.classList.add(`${type}`)
+    let mess = document.getElementById("mess")
 
+    //disappear and delete message
+    setTimeout(() => {
+        alertBox.classList.remove(`${type}`)
+        alertBox.removeChild(mess)
+    }, 1500);
+
+}
+
+//submit on enter
+let addTextOnEnter = (e) => {
+    if(e.keyCode === 13) addToTable();
+}
+
+//events
 addBtn.addEventListener("click", addToTable);
 this.addEventListener('load', renderStorageToDocument)
+this.addEventListener('keyup', addTextOnEnter)

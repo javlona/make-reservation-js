@@ -41,12 +41,6 @@ td:first-child, td:last-child{
     /* transition: all 0.3s; */
 }
 
-.message>*+*{
-    margin: 0 5px;
-    padding: 0 5px;
-    border-left: 1px solid #eee;
-}
-
 .danger{
     background: var(--bs-danger);
 }
