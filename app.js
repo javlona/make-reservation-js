@@ -41,21 +41,18 @@ let addToTable = () => {
 
             updatePerson()
             addBtn.innerText = 'add'
-            inputClear();
 
         } else {
 
         // add person to the table
         addPerson();
         
-        
-        // clear input fields after each use
-        inputClear();
-
         // get cursor in first name input field
         firstName.focus();
     }
-    
+
+    // clear input fields after each use
+    inputClear();
 }
 
 let isStorageEmpty = () => {
@@ -161,7 +158,7 @@ let updatePerson = () => {
     targetPerson.firstName = firstName.value
     targetPerson.lastName = lastName.value
     targetPerson.phone = phone.value
-    
+
     // cut out the old person and add new one
     data.splice(ind-1, 1, targetPerson)
     Storage.add("data", data)
@@ -175,6 +172,8 @@ let updatePerson = () => {
 
 // 
 let renderStorageToDocument = () => {
+    
+
     if(isStorageEmpty()) return;
     
     let data = Storage.get('data')
