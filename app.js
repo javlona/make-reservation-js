@@ -14,7 +14,7 @@ function Person(first, last, phone){
     this.phone = phone;
 }
 
-//Local Storage
+// Local Storage
 let Storage = {
 
     get: function(key){
@@ -30,7 +30,7 @@ let Storage = {
     }
 }
 
-//add entries to table from input
+// add entries to table from input
 let addToTable = () => {
 
     // check if it is not empty
@@ -45,21 +45,21 @@ let addToTable = () => {
 
         } else {
 
-        //add person to the table
+        // add person to the table
         addPerson();
         
         
-        //clear input fields after each use
+        // clear input fields after each use
         inputClear();
 
-        //get cursor in first name input field
+        // get cursor in first name input field
         firstName.focus();
     }
     
 }
 
 let isStorageEmpty = () => {
-    //return !!Storage.get("data").length
+    // return !!Storage.get("data").length
     return Storage.get("data")?.length ? false : true;
 }
 
@@ -69,10 +69,10 @@ let addPerson = () => {
     let deleteIcon = '<i class="fas fa-trash text-center" onclick="deletePerson(event, '+person.id+')"></i>'
     let editIcon = '<i class="fas fa-edit text-center" onclick="selectPerson(event, '+person.id+')"></i>'
 
-    //create tr tag
+    // create tr tag
     let row = document.createElement('tr');
 
-    //add input values inside td into tr
+    // add input values inside td into tr
     row.innerHTML = `
         <td>${editIcon}</td>
         <td>${firstName.value}</td>
@@ -80,7 +80,7 @@ let addPerson = () => {
         <td>${phone.value}</td>
         <td>${deleteIcon}</td>
     `
-    //push the ready tr row into tbody
+    // push the ready tr row into tbody
     nameList.appendChild(row);
 
 
@@ -96,7 +96,7 @@ let addPerson = () => {
         data = [...oldData, person]
     }
 
-    //set data array to localStorage with the name "data"
+    // set data array to localStorage with the name "data"
     Storage.add("data", data)
 
     // alert pops up after addition
@@ -104,24 +104,22 @@ let addPerson = () => {
 }
 
 
-//clear input fields after addition
+// clear input fields after addition
 let inputClear = () => {
     firstName.value = "";
     lastName.value = "";
     phone.value = "";
 }
 
-//delete person on delete button
+// delete person on delete button
 let deletePerson = (e, id) => {
-    //delete from document
+    // delete from document
     e.target.parentElement.parentElement.remove()
     
-    // delete from localStorage with filtering out
+    // filtering out the person and add the remaining to the Storage
     const data = Storage.get("data")
     let newData = data.filter(data => data.id != id)
-
     Storage.add("data", newData)
-    //console.log(data,id)
 
     alertMessage(' Deleted', 'warning')
 }
@@ -129,40 +127,46 @@ let deletePerson = (e, id) => {
 let ind;
 let row = document.getElementById('nameList').getElementsByTagName("tr");
 
-//edit existing entry
+// edit existing entry
 let selectPerson = (e, id) => {
     if(addBtn.innerText === 'add') addBtn.innerText = 'update'
     
     // copy from localStorage
     const data = Storage.get("data")
 
+    // pick the very person and put it in input fields
     let newData = data.filter(data => data.id === id)
+    console.log(newData)
     firstName.value = newData[0].firstName
     lastName.value = newData[0].lastName
     phone.value = newData[0].phone
     
-    
+    // get the index of selected row
     for (let i = 0; i < row.length; i++) {
         row[i].onclick = function(){
             ind = this.rowIndex;
             console.log(ind)
         }
     }
-    // deletePerson(e) //first deletes the entry
-    // addPerson() // then adds from input
-    // inputClear() // clears the input field
-    // alertMessage(' Updated', 'success') // and gives alert
 
 }
 
 
 let updatePerson = () => {
-    // const data = Storage.get("data")
+    const data = Storage.get("data")
 
-    // let targetPerson = data.filter(data => data.id === id)
-    // targetPerson[0].firstName = firstName.value
-    // targetPerson[0].lastName = lastName.value
-    // targetPerson[0].phone = phone.value
+    let targetPerson = data[ind-1]
+
+    // update in Storage
+    targetPerson.firstName = firstName.value
+    targetPerson.lastName = lastName.value
+    targetPerson.phone = phone.value
+    
+    // cut out the old person and add new one
+    data.splice(ind-1, 1, targetPerson)
+    Storage.add("data", data)
+
+    // update in document
     row[ind-1].cells[1].innerHTML = firstName.value
     row[ind-1].cells[2].innerHTML = lastName.value
     row[ind-1].cells[3].innerHTML = phone.value
@@ -179,10 +183,10 @@ let renderStorageToDocument = () => {
         let deleteIcon = '<i class="fas fa-trash text-center" onclick="deletePerson(event, '+user.id+')"></i>'
         let editIcon = '<i class="fas fa-edit text-center" onclick="selectPerson(event, '+user.id+')"></i>'
         
-        //create tr tag
+        // create tr tag
         let row = document.createElement('tr');
         
-        //add input values inside td into tr
+        // add input values inside td into tr
         row.innerHTML = `
         <td>${editIcon}</td>
         <td>${user.firstName}</td>
@@ -190,7 +194,7 @@ let renderStorageToDocument = () => {
         <td>${user.phone}</td>
         <td>${deleteIcon}</td>
         `
-        //push the ready tr row into tbody
+        // push the ready tr row into tbody
         nameList.appendChild(row);
     }
 }
@@ -204,7 +208,7 @@ let alertMessage = (message, type) => {
     alertBox.classList.add(`${type}`)
     let mess = document.getElementById("mess")
 
-    //disappear and delete message
+    // disappear and delete message
     setTimeout(() => {
         alertBox.classList.remove(`${type}`)
         alertBox.removeChild(mess)
@@ -212,12 +216,12 @@ let alertMessage = (message, type) => {
 
 }
 
-//submit on enter
+// submit on enter
 let addTextOnEnter = (e) => {
     if(e.keyCode === 13) addToTable();
 }
 
-//events
+// events
 addBtn.addEventListener("click", addToTable);
 this.addEventListener('load', renderStorageToDocument)
 this.addEventListener('keyup', addTextOnEnter)
