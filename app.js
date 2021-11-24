@@ -2,9 +2,10 @@ let firstName = document.querySelector('#firstName');
 let lastName = document.querySelector('#lastName');
 let phone = document.querySelector('#phone');
 let addBtn = document.querySelector('#addBtn');
-let reservationTable = document.querySelector('#reservationTable'); //table tag
+let table = document.querySelector('#table'); //table tag
 let nameList = document.querySelector('#nameList');  // tbody tag
 let alertBox = document.querySelector('#alert')
+
 
 function Person(first, last, phone){
     this.id = Date.now()
@@ -35,16 +36,26 @@ let addToTable = () => {
     // check if it is not empty
     if(firstName.value === "" || lastName.value === "" || phone.value === "" ) {
         alertMessage('Please fill out', 'danger')
+
+        } else if (addBtn.innerText === 'update'){
+
+            updatePerson()
+            addBtn.innerText = 'add'
+            inputClear();
+
         } else {
+
         //add person to the table
         addPerson();
-
+        
+        
         //clear input fields after each use
         inputClear();
 
         //get cursor in first name input field
         firstName.focus();
     }
+    
 }
 
 let isStorageEmpty = () => {
@@ -56,7 +67,7 @@ let addPerson = () => {
     const person = new Person(firstName.value, lastName.value, phone.value);
     
     let deleteIcon = '<i class="fas fa-trash text-center" onclick="deletePerson(event, '+person.id+')"></i>'
-    let editIcon = '<i class="fas fa-edit text-center" onclick="updatePerson(event, '+person.id+')"></i>'
+    let editIcon = '<i class="fas fa-edit text-center" onclick="selectPerson(event, '+person.id+')"></i>'
 
     //create tr tag
     let row = document.createElement('tr');
@@ -115,18 +126,28 @@ let deletePerson = (e, id) => {
     alertMessage(' Deleted', 'warning')
 }
 
+let ind;
+let row = document.getElementById('nameList').getElementsByTagName("tr");
+
 //edit existing entry
-let updatePerson = (id) => {
+let selectPerson = (e, id) => {
     if(addBtn.innerText === 'add') addBtn.innerText = 'update'
     
+    // copy from localStorage
     const data = Storage.get("data")
-    console.log(data)
+
     let newData = data.filter(data => data.id === id)
     firstName.value = newData[0].firstName
     lastName.value = newData[0].lastName
     phone.value = newData[0].phone
-
-
+    
+    
+    for (let i = 0; i < row.length; i++) {
+        row[i].onclick = function(){
+            ind = this.rowIndex;
+            console.log(ind)
+        }
+    }
     // deletePerson(e) //first deletes the entry
     // addPerson() // then adds from input
     // inputClear() // clears the input field
@@ -134,7 +155,17 @@ let updatePerson = (id) => {
 
 }
 
-let updateTable = (id) => {
+
+let updatePerson = () => {
+    // const data = Storage.get("data")
+
+    // let targetPerson = data.filter(data => data.id === id)
+    // targetPerson[0].firstName = firstName.value
+    // targetPerson[0].lastName = lastName.value
+    // targetPerson[0].phone = phone.value
+    row[ind-1].cells[1].innerHTML = firstName.value
+    row[ind-1].cells[2].innerHTML = lastName.value
+    row[ind-1].cells[3].innerHTML = phone.value
 
 }
 
@@ -146,7 +177,7 @@ let renderStorageToDocument = () => {
     for(let user of data){
         
         let deleteIcon = '<i class="fas fa-trash text-center" onclick="deletePerson(event, '+user.id+')"></i>'
-        let editIcon = '<i class="fas fa-edit text-center" onclick="updatePerson(event, '+user.id+')"></i>'
+        let editIcon = '<i class="fas fa-edit text-center" onclick="selectPerson(event, '+user.id+')"></i>'
         
         //create tr tag
         let row = document.createElement('tr');
@@ -190,3 +221,5 @@ let addTextOnEnter = (e) => {
 addBtn.addEventListener("click", addToTable);
 this.addEventListener('load', renderStorageToDocument)
 this.addEventListener('keyup', addTextOnEnter)
+
+
