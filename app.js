@@ -1,10 +1,10 @@
-let firstName = document.querySelector('#firstName');
-let lastName = document.querySelector('#lastName');
-let phone = document.querySelector('#phone');
-let addBtn = document.querySelector('#addBtn');
-let table = document.querySelector('#table'); //table tag
-let nameList = document.querySelector('#nameList');  // tbody tag
-let alertBox = document.querySelector('#alert')
+const firstName = document.querySelector('#firstName');
+const lastName = document.querySelector('#lastName');
+const phone = document.querySelector('#phone');
+const addBtn = document.querySelector('#addBtn');
+const table = document.querySelector('#table'); //table tag
+const nameList = document.querySelector('#nameList');  // tbody tag
+const alertBox = document.querySelector('#alert')
 
 
 function Person(first, last, phone){
